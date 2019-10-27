@@ -15,7 +15,7 @@ const getUserById = (req, res) => {
 
 const editUser = (req, res) => {
     delete req.body.role;
-    Users.findOneAndUpdate({_id: req.params.id}, req.body, {new: true})
+    Users.findOneAndUpdate({_id: req.params.id}, req.body, {new: true, runValidators: true})
         .then(user => res.send({res: user}) )
         .catch(error => res.status(404).send({error}) );
 }
