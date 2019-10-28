@@ -31,7 +31,8 @@ const responseToken = (user) => {
     let userResponse = {
         access_token: dataToken[0],
         refresh_token: authJWT.createRefreshToken(user),
-        expires_in: dataToken[1]
+        expires_in: dataToken[1],
+        role: user.role
     };
     return userResponse;
 }
@@ -48,7 +49,7 @@ const logIn = (req, res) => {
         Users.findOne({
                 email: req.body.email
             })
-            .select("_id password")
+            .select("_id password role")
             .exec((err, userResult) => {
                 if (err || !userResult) {
                     return res.status(401).send({ error: "LoginError" });
